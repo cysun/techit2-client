@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+
+  <button class="navbar-toggler" type="button" (click)="collapsed = !collapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngbCollapse]="collapsed" class="navbar-collapse collapse w-100 order-1 order-md-0">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Requests</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Users</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mx-auto order-0">
+    <a class="navbar-brand mx-auto" href="#">TechOps Work Orders</a>
+  </div>
+
+  <div [ngbCollapse]="collapsed" class="navbar-collapse collapse w-100 order-2">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
