@@ -1,9 +1,26 @@
+<ngb-alert *ngIf="loginFailed" [type]="'danger'" (close)="loginFailed = false">
+  Login failed. Please try again.
+</ngb-alert>
+
 <div class="jumbotron mb-0">
   <h1 class="display-4">Welcome to TWO!</h1>
   <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, expedita consequuntur iste, itaque
     eligendi magni animi perferendis nam doloribus quasi in minima labore harum sequi et ullam suscipit
     repudiandae libero.</p>
   <p>
-    <a class="btn btn-primary btn-lg" href="#">Login</a>
+    <button class="btn btn-primary btn-lg" (click)="open(loginForm)">Login</button>
   </p>
 </div>
+
+<ng-template #loginForm let-close="close" let-dismiss="dismiss">
+  <div class="modal-body">
+    <form>
+      <input name="username" type="text" placeholder="Username" class="form-control" [(ngModel)]="login.username">
+      <input name="password" type="password" placeholder="Password" class="form-control" [(ngModel)]="login.password">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="close()" [disabled]="!(login.username && login.password)">Login</button>
+  </div>
+</ng-template>
