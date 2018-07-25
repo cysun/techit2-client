@@ -9,9 +9,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { RequestsComponent } from './components/requests/requests.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+    WelcomeComponent,
+    NavbarComponent,
+    RequestsComponent,
+    ProfileComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,

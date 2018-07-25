@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 export class User {
   _id: number;
   username: string;
@@ -10,4 +12,20 @@ export class User {
   email: string;
   phone: string;
   department: string;
+
+  constructor(obj: any) {
+    _.extend(this, obj);
+  }
+
+  isAdmin(): boolean {
+    return this.roles.includes('ADMIN');
+  }
+
+  isSupervisor(): boolean {
+    return this.roles.includes('SUPERVISOR');
+  }
+
+  isTechnician(): boolean {
+    return this.roles.includes('TECHNICIAN');
+  }
 }

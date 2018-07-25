@@ -28,7 +28,8 @@ export class AuthService {
   }
 
   private _getCurrentUser(): User {
-    return JSON.parse(localStorage.getItem('currentUser'));
+    const jsonUser = localStorage.getItem('currentUser');
+    return jsonUser != null ? new User(JSON.parse(jsonUser)) : null;
   }
 
   login(username: string, password: string): Observable<boolean> {
@@ -40,7 +41,7 @@ export class AuthService {
           localStorage.clear();
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
           localStorage.setItem('jwtToken', loginResponse.token);
-          this.currentUserSubject.next(currentUser);
+          this.currentUserSubject.next(new User(currentUser));
           return true;
         }),
         catchError(this._handleError)
