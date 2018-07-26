@@ -28,4 +28,8 @@ export class User {
   isTechnician(): boolean {
     return this.roles.includes('TECHNICIAN');
   }
+
+  isRegular(): boolean {
+    return !this.roles || this.roles.length === 0;
+  }
 }

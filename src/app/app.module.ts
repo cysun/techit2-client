@@ -9,7 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { RequestsComponent } from './components/requests/requests.component';
+import { TicketsComponent } from './components/tickets/tickets.component';
+import { TicketsTableComponent } from './components/tickets-table/tickets-table.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
@@ -17,8 +18,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     AppComponent,
     WelcomeComponent,
     NavbarComponent,
-    RequestsComponent,
-    ProfileComponent
+    ProfileComponent,
+    TicketsComponent,
+    TicketsTableComponent
   ],
   imports: [
     BrowserModule,

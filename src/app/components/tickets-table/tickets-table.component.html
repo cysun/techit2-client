@@ -1,0 +1,26 @@
+<p *ngIf="! tickets || tickets.length == 0; else hasTickets" class="mt-3">
+  No tickets found.
+</p>
+
+<ng-template #hasTickets>
+  <table class="table table-bordered table-hover mt-3">
+    <thead class="thead-light">
+      <tr>
+        <th>ID</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ticket._id}}</td>
+        <td>{{ticket.subject}}</td>
+        <td>{{ticket.status}}</td>
+        <td>{{ticket.dateCreated | date:'shortDate'}}</td>
+        <td>{{ticket.dateUpdated}}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

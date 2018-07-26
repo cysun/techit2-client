@@ -28,7 +28,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
     this.authService.getCurrentUser().subscribe(currentUser => {
       this.currentUser = currentUser;
-      if (this.currentUser) this.router.navigate(['requests']);
+      if (this.currentUser) this.router.navigate(['tickets']);
     });
   }
 

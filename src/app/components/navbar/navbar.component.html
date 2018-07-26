@@ -7,7 +7,7 @@
   <div *ngIf="currentUser" [ngbCollapse]="collapsed" class="navbar-collapse collapse w-100 order-1 order-md-0">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="requests">Requests</a>
+        <a class="nav-link" routerLink="tickets">Tickets</a>
       </li>
       <li class="nav-item">
         <a *ngIf="currentUser.isAdmin()" class="nav-link" href="#">Users</a>
@@ -22,7 +22,7 @@
   <div *ngIf="currentUser" [ngbCollapse]="collapsed" class="navbar-collapse collapse w-100 order-2">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="profile">Profile</a>
+        <a class="nav-link" routerLink="profile">{{currentUser.firstName}}'s Profile</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="logout()">Logout</a>
