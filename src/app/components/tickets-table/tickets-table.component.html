@@ -7,19 +7,17 @@
     <thead class="thead-light">
       <tr>
         <th>ID</th>
-        <th>Subject</th>
+        <th>Ticket</th>
         <th>Status</th>
-        <th>Created</th>
-        <th>Updated</th>
+        <th class="d-none d-md-table-cell">Submitted</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ticket of tickets">
         <td>{{ticket._id}}</td>
-        <td>{{ticket.subject}}</td>
+        <td><a [routerLink]="[ticket._id]">{{ticket.subject}}</a></td>
         <td>{{ticket.status}}</td>
-        <td>{{ticket.dateCreated | date:'shortDate'}}</td>
-        <td>{{ticket.dateUpdated}}</td>
+        <td class="d-none d-md-table-cell">{{ticket.dateCreated | date:'shortDate'}}</td>
       </tr>
     </tbody>
   </table>

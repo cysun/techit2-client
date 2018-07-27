@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { TicketsTableComponent } from './components/tickets-table/tickets-table.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { TicketComponent } from './components/ticket/ticket.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     NavbarComponent,
     ProfileComponent,
     TicketsComponent,
-    TicketsTableComponent
+    TicketsTableComponent,
+    TicketComponent
   ],
   imports: [
     BrowserModule,

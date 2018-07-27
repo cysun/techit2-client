@@ -35,4 +35,10 @@ export class TicketService {
       .get<Ticket[]>('/api/tickets/assigned')
       .pipe(catchError(this._handleError));
   }
+
+  get(id: string): Observable<Ticket> {
+    return this.http
+      .get<Ticket>(`/api/tickets/${id}`)
+      .pipe(catchError(this._handleError));
+  }
 }

@@ -1,0 +1,66 @@
+<p calss="mt-3">
+  <button type="button" class="btn btn-link" (click)="back()">Back to Tickets</button>
+</p>
+
+<p *ngIf="! ticket; else hasTicket" class="mt-3">
+  Fetching ticket ...
+</p>
+
+<ng-template #hasTicket>
+  <dl class="row m-3 border">
+    <dt class="col-6 col-md-2">Ticket ID</dt>
+    <dd class="col-6 col-md-2">{{ticket._id}}</dd>
+    <dt class="col-6 col-md-2">Priority</dt>
+    <dd class="col-6 col-md-2">{{ticket.priority}}</dd>
+    <dt class="col-6 col-md-2">Status</dt>
+    <dd class="col-6 col-md-2">{{ticket.status}}</dd>
+  </dl>
+
+  <div class="row m-3 p-2">
+    <div class="col-12">
+      <h5>{{ticket.subject}}</h5>
+    </div>
+    <div class="col-12" *ngIf="ticket.location">
+      <p>Location: {{ticket.location}}</p>
+    </div>
+    <div class="col-12">
+      <p class="card-text">{{ticket.details}}</p>
+    </div>
+  </div>
+
+  <dl class="row m-3 border">
+    <dt class="col-12">Submitted:</dt>
+    <dd class="col-12 col-sm-6 col-md-3">{{ticket.dateCreated | date:'shortDate'}}</dd>
+    <div class="col-12 col-sm-6 col-md-3">
+      <a href="mailto:{{ticket.createdForEmail}}">{{ticket.createdForName}}</a>
+    </div>
+    <div class="col-12 col-sm-6 col-md-3">{{ticket.createdForPhone}}</div>
+    <div class="col-12 col-sm-6 col-md-3">{{ticket.createdForDepartment}}</div>
+  </dl>
+
+  <dl *ngIf="ticket.technicians.length > 0" class="row m-3 border">
+    <dt class="col-12">Assigned to technician(s):</dt>
+    <ul>
+      <li *ngFor="let technician of ticket.technicians">
+        {{technician.firstName}} {{technician.lastName}}
+      </li>
+    </ul>
+  </dl>
+
+  <div *ngIf="ticket.updates.length > 0" class="row m-3">
+    <div class="col-12">
+      <h5>Updates</h5>
+    </div>
+    <div *ngFor="let update of ticket.updates" class="col-12 border p-0">
+      <div class="bg-light text-muted border-bottom px-2">
+        {{update.date | date:'medium'}} by {{update.technician.username}}
+      </div>
+      <p class="p-2">{{update.details}}</p>
+    </div>
+  </div>
+
+</ng-template>
+
+<p calss="mt-3">
+  <button type="button" class="btn btn-link" (click)="back()">Back to Tickets</button>
+</p>
