@@ -29,13 +29,12 @@
   </div>
 
   <dl class="row m-3 border">
-    <dt class="col-12">Submitted:</dt>
-    <dd class="col-12 col-sm-6 col-md-3">{{ticket.dateCreated | date:'shortDate'}}</dd>
-    <div class="col-12 col-sm-6 col-md-3">
-      <a href="mailto:{{ticket.createdForEmail}}">{{ticket.createdForName}}</a>
-    </div>
-    <div class="col-12 col-sm-6 col-md-3">{{ticket.createdForPhone}}</div>
-    <div class="col-12 col-sm-6 col-md-3">{{ticket.createdForDepartment}}</div>
+    <dt class="col-6 col-sm-6 col-md-4">Submitted:</dt>
+    <dd class="col-6 col-sm-6 col-md-4">{{ticket.dateCreated | date:'shortDate'}}</dd>
+    <dd class="col-12 col-sm-6 col-md-4">{{ticket.createdForName}}</dd>
+    <dd class="col-12 col-sm-6 col-md-4">{{ticket.createdForEmail}}</dd>
+    <dd class="col-12 col-sm-6 col-md-4">{{ticket.createdForPhone}}</dd>
+    <dd class="col-12 col-sm-6 col-md-4">{{ticket.createdForDepartment}}</dd>
   </dl>
 
   <dl *ngIf="ticket.technicians.length > 0" class="row m-3 border">

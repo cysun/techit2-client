@@ -17,6 +17,10 @@ export class User {
     _.extend(this, obj);
   }
 
+  get name() {
+    return this.firstName + ' ' + this.lastName;
+  }
+
   isAdmin(): boolean {
     return this.roles.includes('ADMIN');
   }

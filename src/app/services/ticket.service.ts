@@ -41,4 +41,10 @@ export class TicketService {
       .get<Ticket>(`/api/tickets/${id}`)
       .pipe(catchError(this._handleError));
   }
+
+  submit(ticket: Ticket): Observable<Ticket> {
+    return this.http
+      .post<Ticket>('/api/tickets', ticket)
+      .pipe(catchError(this._handleError));
+  }
 }

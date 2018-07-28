@@ -13,6 +13,16 @@ import { TicketsComponent } from './components/tickets/tickets.component';
 import { TicketsTableComponent } from './components/tickets-table/tickets-table.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TicketComponent } from './components/ticket/ticket.component';
+import { TicketFormComponent } from './components/ticket-form/ticket-form.component';
+
+const DEPARTMENTS = [
+  'Civil Engineering',
+  'Computer Science',
+  'Electrical and Computer Engineering',
+  'Mechanical Engineering',
+  'Technology',
+  'Other'
+];
 
 @NgModule({
   declarations: [
@@ -22,7 +32,8 @@ import { TicketComponent } from './components/ticket/ticket.component';
     ProfileComponent,
     TicketsComponent,
     TicketsTableComponent,
-    TicketComponent
+    TicketComponent,
+    TicketFormComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +49,7 @@ import { TicketComponent } from './components/ticket/ticket.component';
       }
     })
   ],
-  providers: [],
+  providers: [{ provide: 'DEPARTMENTS', useValue: DEPARTMENTS }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

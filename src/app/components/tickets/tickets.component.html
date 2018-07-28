@@ -1,3 +1,7 @@
+<p class="text-right mt-3">
+  <a class="btn btn-primary" routerLink="new">New Ticket</a>
+</p>
+
 <app-tickets-table *ngIf="currentUser.isRegular()" [tickets]="ticketsSubmitted"></app-tickets-table>
 
 <ngb-tabset *ngIf="!currentUser.isRegular()" [activeId]="currentUser.isTechnician() ? 'assigned' : 'all'">

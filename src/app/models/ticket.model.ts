@@ -31,4 +31,12 @@ export class Ticket {
       date: Date;
     }
   ];
+
+  constructor(user: User) {
+    this.createdBy = user;
+    this.createdForName = user.name;
+    this.createdForEmail = user.email;
+    this.createdForPhone = user.phone;
+    this.createdForDepartment = user.department;
+  }
 }

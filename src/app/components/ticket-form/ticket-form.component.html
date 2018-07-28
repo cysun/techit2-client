@@ -1,0 +1,48 @@
+<h5 class="m-3">New Ticket</h5>
+<form #ticketForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-row m-3">
+    <div class="form-group col-md-6">
+      <label>Name</label>
+      <input [(ngModel)]="ticket.createdForName" name="createdForName" type="text"
+        class="form-control" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Email</label>
+      <input [(ngModel)]="ticket.createdForEmail" name="createdForEmail" type="email"
+        class="form-control" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Phone (Optional)</label>
+      <input [(ngModel)]="ticket.createdForPhone" name="createdForPhone" type="phone"
+        class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Department</label>
+      <select [(ngModel)]="ticket.createdForDepartment" name="createdForDepartment"
+        class="form-control" required>
+        <option *ngFor="let department of departments">{{department}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-8">
+      <label>Subject</label>
+      <input [(ngModel)]="ticket.subject" name="subject" type="text" class="form-control"
+        required maxlength="60">
+      <small class="form-text text-muted">
+        One sentence summary of the request in no more than 60 characters
+      </small>
+    </div>
+    <div class="form-group col-md-4">
+      <label>Location (Optional)</label>
+      <input [(ngModel)]="ticket.location" name="location" type="text" class="form-control">
+    </div>
+    <div class="form-group col">
+      <label>Details</label>
+      <textarea [(ngModel)]="ticket.details" name="details" class="form-control" rows="7"
+        required></textarea>
+    </div>
+  </div>
+  <div class="form-row m-3">
+    <a routerLink=".." class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary mx-3" [disabled]="!ticketForm.form.valid">Submit</button>
+  </div>
+</form>
