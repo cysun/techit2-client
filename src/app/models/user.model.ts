@@ -13,12 +13,21 @@ export class User {
   phone: string;
   department: string;
 
+  password: string;
+  password2: string;
+
   constructor(obj: any) {
     _.extend(this, obj);
   }
 
   get name() {
     return this.firstName + ' ' + this.lastName;
+  }
+
+  set name(name: string) {
+    const words = name.split(' ');
+    this.firstName = words[0];
+    this.lastName = words[1];
   }
 
   isAdmin(): boolean {

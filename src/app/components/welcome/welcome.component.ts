@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styles: ['::ng-deep .alert { margin-bottom: 0; }']
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent implements OnInit, OnDestroy {
   currentUser: User;
+  currentUserSub: Subscription;
 
   login = {
     username: '',
@@ -26,10 +28,16 @@ export class WelcomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.getCurrentUser().subscribe(currentUser => {
-      this.currentUser = currentUser;
-      if (this.currentUser) this.router.navigate(['tickets']);
-    });
+    this.currentUserSub = this.authService
+      .getCurrentUser()
+      .subscribe(currentUser => {
+        this.currentUser = currentUser;
+        if (this.currentUser) this.router.navigate(['tickets']);
+      });
+  }
+
+  ngOnDestroy() {
+    this.currentUserSub.unsubscribe();
   }
 
   open(loginForm) {

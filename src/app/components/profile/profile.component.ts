@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class ProfileComponent implements OnInit {
+  user: User;
+  editable = false;
 
-  constructor() { }
+  constructor(
+    @Inject('DEPARTMENTS') private departments: string[],
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.authService.getCurrentUser().subscribe(currentUser => {
+      if (currentUser) this.user = new User(currentUser);
+    });
   }
 
+  onSubmit() {
+    this.authService.update(this.user).subscribe(() => {
+      this.editable = false;
+    });
+  }
 }
