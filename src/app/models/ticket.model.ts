@@ -1,4 +1,5 @@
 import { User } from './user.model';
+import { Update } from './update.model';
 
 export class Ticket {
   _id: number;
@@ -21,16 +22,7 @@ export class Ticket {
   status: string;
 
   techicians: number[] | User[];
-  updates: [
-    {
-      details: string;
-      technician: {
-        id: number;
-        username: string;
-      };
-      date: Date;
-    }
-  ];
+  updates: [Update];
 
   constructor(user: User) {
     this.createdBy = user;

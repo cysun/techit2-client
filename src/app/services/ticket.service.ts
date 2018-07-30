@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Ticket } from '../models/ticket.model';
 
 @Injectable({
@@ -36,7 +36,7 @@ export class TicketService {
       .pipe(catchError(this._handleError));
   }
 
-  get(id: string): Observable<Ticket> {
+  get(id: number): Observable<Ticket> {
     return this.http
       .get<Ticket>(`/api/tickets/${id}`)
       .pipe(catchError(this._handleError));
@@ -46,5 +46,18 @@ export class TicketService {
     return this.http
       .post<Ticket>('/api/tickets', ticket)
       .pipe(catchError(this._handleError));
+  }
+
+  update(
+    id: number,
+    field: string,
+    value: string,
+    details: string
+  ): Observable<boolean> {
+    const body = details ? { details } : {};
+    return this.http.put(`/api/tickets/${id}/${field}/${value}`, body).pipe(
+      map(() => true),
+      catchError(this._handleError)
+    );
   }
 }
