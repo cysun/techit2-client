@@ -130,4 +130,24 @@ export class TicketComponent implements OnInit, OnDestroy {
       })
       .catch(() => {});
   }
+
+  openUpdateForm(form) {
+    this.update.details = '';
+    this.modalService
+      .open(form)
+      .result.then(() => {
+        if (!this.update.details) return;
+        this.ticketService
+          .addUpdate(this.ticket._id, this.update.details)
+          .subscribe(() => {
+            const newUpdate = new Update();
+            newUpdate.details = this.update.details;
+            newUpdate.technician = this.update.technician;
+            this.ticket.updates.push(newUpdate);
+          });
+      })
+      .catch(() => {
+        this.update.details = '';
+      });
+  }
 }

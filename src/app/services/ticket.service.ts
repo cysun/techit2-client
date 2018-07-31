@@ -70,4 +70,11 @@ export class TicketService {
         catchError(this._handleError)
       );
   }
+
+  addUpdate(id: number, details: string): Observable<boolean> {
+    return this.http.post(`/api/tickets/${id}/updates`, { details }).pipe(
+      map(() => true),
+      catchError(this._handleError)
+    );
+  }
 }
