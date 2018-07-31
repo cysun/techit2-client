@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +8,7 @@ import { User } from '../../models/user.model';
 import { Ticket } from '../../models/ticket.model';
 import { Update } from '../../models/update.model';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { TicketService } from '../../services/ticket.service';
 
 @Component({
@@ -21,11 +23,16 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   update = new Update();
 
+  allTechnicians: User[];
+  technicians: User[];
+  technicianIds: number[];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private authService: AuthService,
+    private userService: UserService,
     private ticketService: TicketService,
     private location: Location
   ) {}
@@ -38,6 +45,7 @@ export class TicketComponent implements OnInit, OnDestroy {
       }
       this.ticketService.get(params['id']).subscribe(ticket => {
         this.ticket = ticket;
+        this.technicians = ticket.getTechnicians();
       });
     });
     this.currentUserSub = this.authService
@@ -49,6 +57,9 @@ export class TicketComponent implements OnInit, OnDestroy {
           username: this.currentUser.username
         };
       });
+    this.userService
+      .technicians()
+      .subscribe(technicians => (this.allTechnicians = technicians));
   }
 
   ngOnDestroy() {
@@ -59,7 +70,7 @@ export class TicketComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  open(form, field: string) {
+  openFieldForm(form, field: string) {
     this.update.details = '';
     const oldValue = this.ticket[field];
     this.modalService
@@ -88,5 +99,35 @@ export class TicketComponent implements OnInit, OnDestroy {
         this.ticket[field] = oldValue;
         this.update.details = '';
       });
+  }
+
+  openTechniciansForm(form) {
+    this.technicianIds = this.technicians.map(technician => technician._id);
+    this.modalService
+      .open(form)
+      .result.then(() => {
+        this.technicianIds = _.compact(this.technicianIds);
+        this.ticketService
+          .assign(this.ticket._id, this.technicianIds)
+          .subscribe(() => {
+            this.technicians = this.technicianIds.map(id => {
+              return _.find(
+                this.allTechnicians,
+                technician => technician._id === id
+              );
+            });
+            const newUpdate = new Update();
+            newUpdate.summary =
+              this.technicians.length > 0
+                ? 'Assigned technician(s) to ticket'
+                : 'Removed technician(s) from ticket';
+            newUpdate.technician = {
+              id: this.currentUser._id,
+              username: this.currentUser.username
+            };
+            this.ticket.updates.push(newUpdate);
+          });
+      })
+      .catch(() => {});
   }
 }

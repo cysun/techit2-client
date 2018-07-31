@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   CanActivate,
+  CanActivateChild,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  CanActivateChild
+  RouterStateSnapshot
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

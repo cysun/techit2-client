@@ -6,15 +6,15 @@
   <div class="row m-3 justify-content-end">
     <div class="btn-toolbar">
       <div class="btn-group mr-2">
-        <button (click)="open(priorityForm, 'priority')" type="button" class="btn btn-outline-secondary">
+        <button (click)="openFieldForm(priorityForm, 'priority')" type="button" class="btn btn-outline-secondary">
           <span class="mr-2 d-none d-lg-inline">Change Priority</span>
           <i class="fas fa-sort-amount-up"></i>
         </button>
-        <button (click)="open(statusForm, 'status')" type="button" class="btn btn-outline-secondary">
+        <button (click)="openFieldForm(statusForm, 'status')" type="button" class="btn btn-outline-secondary">
           <span class="mr-2 d-none d-lg-inline">Change Status</span>
           <i class="far fa-check-circle"></i>
         </button>
-        <button type="button" class="btn btn-outline-secondary">
+        <button (click)="openTechniciansForm(techniciansForm)" type="button" class="btn btn-outline-secondary">
           <span class="mr-2 d-none d-lg-inline">Assign to Technician(s)</span>
           <i class="fas fa-user-cog"></i>
         </button>
@@ -58,17 +58,17 @@
     <dd class="col-12 col-sm-6 col-md-4">{{ticket.createdForDepartment}}</dd>
   </dl>
 
-  <dl *ngIf="ticket.technicians.length > 0" class="row m-3 border">
+  <dl *ngIf="technicians.length > 0" class="row m-3 border">
     <dt class="col-12">Assigned to technician(s):</dt>
     <ul>
-      <li *ngFor="let technician of ticket.technicians">
+      <li *ngFor="let technician of technicians">
         {{technician.firstName}} {{technician.lastName}}
       </li>
     </ul>
   </dl>
 
   <div *ngIf="ticket.updates.length > 0" class="row m-3">
-    <div class="col-12">
+    <div class="col-12 m-2">
       <h5>Updates</h5>
     </div>
     <div *ngFor="let update of ticket.updates" class="col-12 border p-0">
@@ -121,6 +121,25 @@
       </select>
       <textarea [(ngModel)]="update.details" name="details" class="form-control mt-2"
         rows="4" placeholder="Addtional comments"></textarea>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="close()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #techniciansForm let-close="close" let-dismiss="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Assign to technician(s)</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div *ngFor="let technician of allTechnicians" class="form-group form-check">
+        <input [(checklist)]="technicianIds" [checklistValue]="technician._id" type="checkbox"
+          class="form-check-input">
+        <label class="form-check-label">{{technician.name}}</label>
+      </div>
     </form>
   </div>
   <div class="modal-footer">

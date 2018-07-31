@@ -37,9 +37,10 @@ export class TicketService {
   }
 
   get(id: number): Observable<Ticket> {
-    return this.http
-      .get<Ticket>(`/api/tickets/${id}`)
-      .pipe(catchError(this._handleError));
+    return this.http.get<Ticket>(`/api/tickets/${id}`).pipe(
+      map(ticket => Ticket.fromObj(ticket)),
+      catchError(this._handleError)
+    );
   }
 
   submit(ticket: Ticket): Observable<Ticket> {
@@ -59,5 +60,14 @@ export class TicketService {
       map(() => true),
       catchError(this._handleError)
     );
+  }
+
+  assign(id: number, technicianIds: number[]): Observable<boolean> {
+    return this.http
+      .put(`/api/tickets/${id}/technicians`, { technicians: technicianIds })
+      .pipe(
+        map(() => true),
+        catchError(this._handleError)
+      );
   }
 }

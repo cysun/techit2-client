@@ -24,7 +24,10 @@ export class TicketFormComponent implements OnInit {
   ngOnInit() {
     this.authService.getCurrentUser().subscribe(currentUser => {
       this.currentUser = currentUser;
-      if (this.currentUser) this.ticket = new Ticket(this.currentUser);
+      if (this.currentUser) {
+        this.ticket = new Ticket();
+        this.ticket.setUser(this.currentUser);
+      }
     });
   }
 
