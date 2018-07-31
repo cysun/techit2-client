@@ -15,7 +15,7 @@ export class TicketFormComponent implements OnInit {
   ticket: Ticket;
 
   constructor(
-    @Inject('DEPARTMENTS') private departments: string[],
+    @Inject('DEPARTMENTS') public departments: string[],
     private router: Router,
     private authService: AuthService,
     private ticketService: TicketService
@@ -32,8 +32,8 @@ export class TicketFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.ticketService.submit(this.ticket).subscribe(() => {
-      this.router.navigate(['..']);
+    this.ticketService.submit(this.ticket).subscribe(newTicket => {
+      this.router.navigate(['tickets', newTicket._id]);
     });
   }
 }

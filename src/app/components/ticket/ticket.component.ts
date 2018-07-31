@@ -58,16 +58,12 @@ export class TicketComponent implements OnInit, OnDestroy {
         };
       });
     this.userService
-      .technicians()
+      .getTechnicians()
       .subscribe(technicians => (this.allTechnicians = technicians));
   }
 
   ngOnDestroy() {
     this.currentUserSub.unsubscribe();
-  }
-
-  back() {
-    this.location.back();
   }
 
   openFieldForm(form, field: string) {

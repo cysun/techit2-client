@@ -1,6 +1,9 @@
-<h5 class="m-3">{{user.firstName}}'s Profile</h5>
+<p class="text-right mt-3">
+  <button type="button" *ngIf="!editable" (click)="editable = true" class="btn btn-primary">Edit Profile</button>
+</p>
+
 <form #userForm="ngForm" (ngSubmit)="onSubmit()">
-  <div class="form-row m-3">
+  <div class="form-row my-3">
     <div class="form-group col-md-6">
       <label>Name</label>
       <input value="{{user.name}}" type="text" class="form-control" disabled>
@@ -44,9 +47,8 @@
         type="password" class="form-control">
     </div>
   </div>
-  <div class="form-row m-3">
-    <a *ngIf="editable" routerLink="../tickets" class="btn btn-secondary">Cancel</a>
-    <button type="submit" *ngIf="editable" [disabled]="!userForm.form.valid" class="btn btn-primary mx-3">Save</button>
-    <button type="button" *ngIf="!editable" (click)="editable = true" class="btn btn-primary">Edit</button>
+  <div class="form-row my-3">
+    <a *ngIf="editable" routerLink="/tickets" class="btn btn-secondary">Cancel</a>
+    <button *ngIf="editable" [disabled]="!userForm.form.valid" type="submit" class="btn btn-primary mx-3">Save</button>
   </div>
 </form>

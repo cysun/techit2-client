@@ -10,11 +10,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { TicketsTableComponent } from './components/tickets-table/tickets-table.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { TicketFormComponent } from './components/ticket-form/ticket-form.component';
+import { UsersComponent } from './components/users/users.component';
+import { UserComponent } from './components/user/user.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
+
+const ROLES = ['ADMIN', 'SUPERVISOR', 'TECHNICIAN'];
 
 const DEPARTMENTS = [
   'Civil Engineering',
@@ -34,7 +39,10 @@ const DEPARTMENTS = [
     TicketsComponent,
     TicketsTableComponent,
     TicketComponent,
-    TicketFormComponent
+    TicketFormComponent,
+    UsersComponent,
+    UserComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +59,10 @@ const DEPARTMENTS = [
       }
     })
   ],
-  providers: [{ provide: 'DEPARTMENTS', useValue: DEPARTMENTS }],
+  providers: [
+    { provide: 'ROLES', useValue: ROLES },
+    { provide: 'DEPARTMENTS', useValue: DEPARTMENTS }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

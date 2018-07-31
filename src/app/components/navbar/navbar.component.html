@@ -10,7 +10,7 @@
         <a class="nav-link" (click)="navigate('tickets')">Tickets</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="currentUser.isAdmin()" class="nav-link" href="#">Users</a>
+        <a *ngIf="currentUser.isAdmin()" class="nav-link" (click)="navigate('users')">Users</a>
       </li>
     </ul>
   </div>

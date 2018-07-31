@@ -16,18 +16,28 @@ export class User {
   password: string;
   password2: string;
 
-  constructor(obj: any) {
-    _.extend(this, obj);
+  static fromObj(obj: any) {
+    const user = new User();
+    _.extend(user, obj);
+    return user;
   }
 
   get name() {
-    return this.firstName + ' ' + this.lastName;
+    return (this.firstName + ' ' + this.lastName).trim();
   }
 
   set name(name: string) {
-    const words = name.split(' ');
-    this.firstName = words[0];
-    this.lastName = words[1];
+    const words = _.compact(name.split(' '));
+    if (words.length < 1) {
+      this.firstName = '';
+      this.lastName = '';
+    } else if (words.length < 2) {
+      this.firstName = words[0];
+      this.lastName = '';
+    } else {
+      this.firstName = words[0];
+      this.lastName = words.slice(1).join(' ');
+    }
   }
 
   isAdmin(): boolean {

@@ -1,0 +1,58 @@
+<h5 class="m-3">New User</h5>
+<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-row m-3">
+    <div class="form-group col-md-6">
+      <label>Name</label>
+      <input [(ngModel)]="user.name" name="name" type="text" class="form-control"
+        required>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Email</label>
+      <input [(ngModel)]="user.email" name="email" type="email" class="form-control"
+        required>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Phone (Optional)</label>
+      <input [(ngModel)]="user.phone" name="phone" type="phone" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Department</label>
+      <select [(ngModel)]="user.department" name="department" class="form-control"
+        required>
+        <option *ngFor="let department of departments">{{department}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3 col-lg-6">
+      <label>Username</label>
+      <input [(ngModel)]="user.username" name="username" type="text" class="form-control"
+        required>
+    </div>
+    <div class="form-group col-md-9 col-lg-6">
+      <label>Roles and Options</label>
+      <div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label m-2">Local</label>
+          <input [(ngModel)]="user.local" name="local" type="checkbox" class="form-check-input">
+        </div>
+        <div *ngFor="let role of roles" class="form-check form-check-inline">
+          <label class="form-check-label m-2">{{role}}</label>
+          <input [(checklist)]="user.roles" [checklistValue]="role" type="checkbox" class="form-check-input">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="user.local" class="form-group col-md-6">
+      <label>Password</label>
+      <input [(ngModel)]="user.password" name="password" type="password" class="form-control"
+        required>
+    </div>
+    <div *ngIf="user.local" class="form-group col-md-6">
+      <label>Confirm Password</label>
+      <input [(ngModel)]="user.password2" name="password2" type="password" class="form-control"
+        required>
+    </div>
+  </div>
+  <div class="form-row m-3">
+    <a routerLink="/users" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary mx-3" [disabled]="!userForm.form.valid">Save</button>
+  </div>
+</form>

@@ -3,7 +3,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
 import { User } from '../models/user.model';
 import { LoginResponse } from '../models/loginResponse.model';
 
@@ -29,7 +28,7 @@ export class AuthService {
 
   private _getCurrentUser(): User {
     const jsonUser = localStorage.getItem('currentUser');
-    return jsonUser != null ? new User(JSON.parse(jsonUser)) : null;
+    return jsonUser != null ? User.fromObj(JSON.parse(jsonUser)) : null;
   }
 
   login(username: string, password: string): Observable<boolean> {
@@ -41,7 +40,7 @@ export class AuthService {
           localStorage.clear();
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
           localStorage.setItem('jwtToken', loginResponse.token);
-          this.currentUserSubject.next(new User(currentUser));
+          this.currentUserSubject.next(User.fromObj(currentUser));
           return true;
         }),
         catchError(this._handleError)
@@ -56,7 +55,7 @@ export class AuthService {
   update(user: User): Observable<boolean> {
     return this.http.patch<User>(`/api/users/${user._id}`, user).pipe(
       map(updatedUser => {
-        this.currentUserSubject.next(new User(updatedUser));
+        this.currentUserSubject.next(User.fromObj(updatedUser));
         return true;
       }),
       catchError(this._handleError)

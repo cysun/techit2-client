@@ -13,14 +13,14 @@ export class ProfileComponent implements OnInit {
   editable = false;
 
   constructor(
-    @Inject('DEPARTMENTS') private departments: string[],
+    @Inject('DEPARTMENTS') public departments: string[],
     private router: Router,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.authService.getCurrentUser().subscribe(currentUser => {
-      if (currentUser) this.user = new User(currentUser);
+      if (currentUser) this.user = User.fromObj(currentUser);
     });
   }
 
