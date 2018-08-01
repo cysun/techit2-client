@@ -27,16 +27,16 @@ export class TicketsComponent implements OnInit {
       this.currentUser = currentUser;
       if (currentUser == null) return;
 
-      this.ticketService.submitted().subscribe(tickets => {
+      this.ticketService.getSubmittedTickets().subscribe(tickets => {
         this.ticketsSubmitted = tickets;
       });
       if (this.currentUser.isTechnician()) {
-        this.ticketService.assigned().subscribe(tickets => {
+        this.ticketService.getAssignedTickets().subscribe(tickets => {
           this.ticketsAssigned = tickets;
         });
       }
       if (!this.currentUser.isRegular()) {
-        this.ticketService.all().subscribe(tickets => {
+        this.ticketService.getTickets().subscribe(tickets => {
           this.ticketsAll = tickets;
         });
       }

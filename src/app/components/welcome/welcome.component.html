@@ -3,10 +3,21 @@
 </ngb-alert>
 
 <div class="jumbotron mb-0">
-  <h1 class="display-4">Welcome to TWO!</h1>
-  <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, expedita consequuntur iste, itaque
-    eligendi magni animi perferendis nam doloribus quasi in minima labore harum sequi et ullam suscipit
-    repudiandae libero.</p>
+  <h1 class="display-4">Welcome to TWR!</h1>
+  <p class="lead">TechOps Work Requests (TWR) is a website that allows the lab coordinators
+    to submit work requests (a.k.a.
+    <em>tickets</em>) and keep track of the status of the requests.</p>
+  <p>Once a ticket is submitted, the supervisor of TechOps will be notified, and
+    he or she will assign one or more lab technicians to work on the request.
+    After the work is completed, the technician(s) will inform the supervisor,
+    and the supervisor will review the work and update the status of the request
+    accordingly.
+  </p>
+  <p>Whenever the status of a request changes (including when an update is added
+    to the ticket by a technician), all parties involved will be notified by
+    email. You can also log onto the website to see the tickets you submitted,
+    and the tickets you are in charge of if you are a supervisor or technician.
+  </p>
   <p>
     <button class="btn btn-primary btn-lg" (click)="open(loginForm)">Login</button>
   </p>
@@ -14,13 +25,15 @@
 
 <ng-template #loginForm let-close="close" let-dismiss="dismiss">
   <div class="modal-body">
-    <form>
-      <input name="username" type="text" placeholder="Username" class="form-control" [(ngModel)]="login.username">
-      <input name="password" type="password" placeholder="Password" class="form-control" [(ngModel)]="login.password">
+    <form #userForm="ngForm">
+      <input [(ngModel)]="login.username" name="username" type="text" placeholder="Username"
+        class="form-control" required>
+      <input [(ngModel)]="login.password" name="password" type="password" placeholder="Password"
+        class="form-control" required>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">Cancel</button>
-    <button type="button" class="btn btn-outline-primary" (click)="close()" [disabled]="!(login.username && login.password)">Login</button>
+    <button (click)="dismiss()" type="button" class="btn btn-outline-secondary">Cancel</button>
+    <button (click)="close()" [disabled]="!userForm.form.valid" type="button" class="btn btn-outline-primary">Login</button>
   </div>
 </ng-template>

@@ -55,4 +55,8 @@ export class User {
   isRegular(): boolean {
     return !this.roles || this.roles.length === 0;
   }
+
+  hasAnyRole(roles: string[]) {
+    return _.intersection(this.roles, roles).length > 0;
+  }
 }

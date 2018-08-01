@@ -11,15 +11,16 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class RoleGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
+    const allowedRoles = route.data['roles'] as Array<string>;
     return this.authService
       .getCurrentUser()
-      .pipe(map(currentUser => currentUser != null));
+      .pipe(map(currentUser => currentUser.hasAnyRole(allowedRoles)));
   }
 }

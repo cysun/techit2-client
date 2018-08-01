@@ -52,7 +52,11 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  update(user: User): Observable<boolean> {
+  getCurrentUser(): Observable<User> {
+    return this.currentUserSubject;
+  }
+
+  updateProfile(user: User): Observable<boolean> {
     return this.http.patch<User>(`/api/users/${user._id}`, user).pipe(
       map(updatedUser => {
         this.currentUserSubject.next(User.fromObj(updatedUser));
@@ -60,9 +64,5 @@ export class AuthService {
       }),
       catchError(this._handleError)
     );
-  }
-
-  getCurrentUser(): Observable<User> {
-    return this.currentUserSubject;
   }
 }

@@ -30,6 +30,10 @@ const DEPARTMENTS = [
   'Other'
 ];
 
+export function tokenGetter() {
+  return localStorage.getItem('jwtToken');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +57,7 @@ const DEPARTMENTS = [
     NgbModule.forRoot(),
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem('jwtToken'),
+        tokenGetter: tokenGetter,
         whitelistedDomains: ['localhost:3000'],
         blacklistedRoutes: ['localhost:3000/api/login']
       }

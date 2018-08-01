@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.update(this.user).subscribe(() => {
+    this.authService.updateProfile(this.user).subscribe(() => {
       this.editable = false;
     });
   }

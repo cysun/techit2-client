@@ -18,38 +18,38 @@ export class TicketService {
     );
   }
 
-  all(): Observable<Ticket[]> {
+  getTickets(): Observable<Ticket[]> {
     return this.http
       .get<Ticket[]>('/api/tickets')
       .pipe(catchError(this._handleError));
   }
 
-  submitted(): Observable<Ticket[]> {
+  getSubmittedTickets(): Observable<Ticket[]> {
     return this.http
       .get<Ticket[]>('/api/tickets/submitted')
       .pipe(catchError(this._handleError));
   }
 
-  assigned(): Observable<Ticket[]> {
+  getAssignedTickets(): Observable<Ticket[]> {
     return this.http
       .get<Ticket[]>('/api/tickets/assigned')
       .pipe(catchError(this._handleError));
   }
 
-  get(id: number): Observable<Ticket> {
+  getTicket(id: number): Observable<Ticket> {
     return this.http.get<Ticket>(`/api/tickets/${id}`).pipe(
       map(ticket => Ticket.fromObj(ticket)),
       catchError(this._handleError)
     );
   }
 
-  submit(ticket: Ticket): Observable<Ticket> {
+  submitTicket(ticket: Ticket): Observable<Ticket> {
     return this.http
       .post<Ticket>('/api/tickets', ticket)
       .pipe(catchError(this._handleError));
   }
 
-  update(
+  updateTicket(
     id: number,
     field: string,
     value: string,
@@ -62,7 +62,7 @@ export class TicketService {
     );
   }
 
-  assign(id: number, technicianIds: number[]): Observable<boolean> {
+  assignTicket(id: number, technicianIds: number[]): Observable<boolean> {
     return this.http
       .put(`/api/tickets/${id}/technicians`, { technicians: technicianIds })
       .pipe(

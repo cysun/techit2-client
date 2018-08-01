@@ -3,9 +3,9 @@
 </p>
 
 <ng-template #hasTicket>
-  <div class="row m-3 justify-content-end">
+  <div *ngIf="!currentUser.isRegular()" class="row m-3 justify-content-end">
     <div class="btn-toolbar">
-      <div class="btn-group mr-2">
+      <div *ngIf="currentUser.isAdmin() || currentUser.isSupervisor()" class="btn-group mr-2">
         <button (click)="openFieldForm(priorityForm, 'priority')" type="button" class="btn btn-outline-secondary">
           <span class="mr-2 d-none d-lg-inline">Change Priority</span>
           <i class="fas fa-sort-amount-up"></i>
@@ -19,7 +19,7 @@
           <i class="fas fa-user-cog"></i>
         </button>
       </div>
-      <div class="btn-group">
+      <div *ngIf="!currentUser.isRegular()" class="btn-group">
         <button (click)="openUpdateForm(updateForm)" type="button" class="btn btn-outline-secondary">
           <span class="mr-2 d-none d-lg-inline">Add Update</span>
           <i class="far fa-comment"></i>

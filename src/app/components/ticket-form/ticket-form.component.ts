@@ -32,7 +32,7 @@ export class TicketFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.ticketService.submit(this.ticket).subscribe(newTicket => {
+    this.ticketService.submitTicket(this.ticket).subscribe(newTicket => {
       this.router.navigate(['tickets', newTicket._id]);
     });
   }

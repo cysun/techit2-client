@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -33,8 +32,7 @@ export class TicketComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private authService: AuthService,
     private userService: UserService,
-    private ticketService: TicketService,
-    private location: Location
+    private ticketService: TicketService
   ) {}
 
   ngOnInit() {
@@ -43,7 +41,7 @@ export class TicketComponent implements OnInit, OnDestroy {
         this.router.navigate(['/tickets']);
         return;
       }
-      this.ticketService.get(params['id']).subscribe(ticket => {
+      this.ticketService.getTicket(params['id']).subscribe(ticket => {
         this.ticket = ticket;
         this.technicians = ticket.getTechnicians();
       });
@@ -51,6 +49,7 @@ export class TicketComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.authService
       .getCurrentUser()
       .subscribe(currentUser => {
+        if (!currentUser) return;
         this.currentUser = currentUser;
         this.update.technician = {
           id: this.currentUser._id,
@@ -74,7 +73,7 @@ export class TicketComponent implements OnInit, OnDestroy {
       .result.then(() => {
         if (this.ticket[field] === oldValue) return;
         this.ticketService
-          .update(
+          .updateTicket(
             this.ticket._id,
             field,
             this.ticket[field],
@@ -104,7 +103,7 @@ export class TicketComponent implements OnInit, OnDestroy {
       .result.then(() => {
         this.technicianIds = _.compact(this.technicianIds);
         this.ticketService
-          .assign(this.ticket._id, this.technicianIds)
+          .assignTicket(this.ticket._id, this.technicianIds)
           .subscribe(() => {
             this.technicians = this.technicianIds.map(id => {
               return _.find(

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
+import { RoleGuard } from './services/role.guard';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
@@ -27,14 +28,21 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
-    canActivate: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
   },
   {
     path: 'users/new',
     component: UserFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
   },
-  { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }
+  {
+    path: 'users/:id',
+    component: UserComponent,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  }
 ];
 
 @NgModule({
