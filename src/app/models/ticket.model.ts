@@ -15,9 +15,7 @@ export class Ticket {
   location: string;
 
   dateCreated: Date;
-  dateAssigned: Date;
   dateUpdated: Date;
-  dateClosed: Date;
 
   priority: string;
   status: string;

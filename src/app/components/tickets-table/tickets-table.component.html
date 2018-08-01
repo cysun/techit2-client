@@ -10,14 +10,18 @@
         <th>Ticket</th>
         <th>Status</th>
         <th class="d-none d-md-table-cell">Submitted</th>
+        <th class="d-none d-md-table-cell">Updated</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ticket of tickets">
         <td>{{ticket._id}}</td>
-        <td><a [routerLink]="[ticket._id]">{{ticket.subject}}</a></td>
+        <td>
+          <a [routerLink]="[ticket._id]">{{ticket.subject}}</a>
+        </td>
         <td>{{ticket.status}}</td>
         <td class="d-none d-md-table-cell">{{ticket.dateCreated | date:'shortDate'}}</td>
+        <td class="d-none d-md-table-cell">{{ticket.dateUpdated | date:'shortDate'}}</td>
       </tr>
     </tbody>
   </table>
