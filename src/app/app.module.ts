@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,6 +35,12 @@ export function tokenGetter() {
   return localStorage.getItem('jwtToken');
 }
 
+// We need to get APP_BASE_HREF so we can inject it into the services.
+// See https://stackoverflow.com/questions/39287444/angular2-how-to-get-app-base-href-programatically
+export function getBaseHref(platformLocation: PlatformLocation): string {
+  return platformLocation.getBaseHrefFromDOM();
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,12 +65,17 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:3000'],
-        blacklistedRoutes: ['localhost:3000/api/login']
+        whitelistedDomains: [],
+        blacklistedRoutes: []
       }
     })
   ],
   providers: [
+    {
+      provide: APP_BASE_HREF,
+      useFactory: getBaseHref,
+      deps: [PlatformLocation]
+    },
     { provide: 'ROLES', useValue: ROLES },
     { provide: 'DEPARTMENTS', useValue: DEPARTMENTS }
   ],

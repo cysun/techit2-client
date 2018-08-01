@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -8,7 +9,10 @@ import { Ticket } from '../models/ticket.model';
   providedIn: 'root'
 })
 export class TicketService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(APP_BASE_HREF) private baseHref: string,
+    private http: HttpClient
+  ) {}
 
   private _handleError(error: HttpErrorResponse) {
     return throwError(
@@ -20,24 +24,24 @@ export class TicketService {
 
   getTickets(): Observable<Ticket[]> {
     return this.http
-      .get<Ticket[]>('/api/tickets')
+      .get<Ticket[]>(`${this.baseHref}api/tickets`)
       .pipe(catchError(this._handleError));
   }
 
   getSubmittedTickets(): Observable<Ticket[]> {
     return this.http
-      .get<Ticket[]>('/api/tickets/submitted')
+      .get<Ticket[]>(`${this.baseHref}api/tickets/submitted`)
       .pipe(catchError(this._handleError));
   }
 
   getAssignedTickets(): Observable<Ticket[]> {
     return this.http
-      .get<Ticket[]>('/api/tickets/assigned')
+      .get<Ticket[]>(`${this.baseHref}api/tickets/assigned`)
       .pipe(catchError(this._handleError));
   }
 
   getTicket(id: number): Observable<Ticket> {
-    return this.http.get<Ticket>(`/api/tickets/${id}`).pipe(
+    return this.http.get<Ticket>(`${this.baseHref}api/tickets/${id}`).pipe(
       map(ticket => Ticket.fromObj(ticket)),
       catchError(this._handleError)
     );
@@ -45,7 +49,7 @@ export class TicketService {
 
   submitTicket(ticket: Ticket): Observable<Ticket> {
     return this.http
-      .post<Ticket>('/api/tickets', ticket)
+      .post<Ticket>(`${this.baseHref}api/tickets`, ticket)
       .pipe(catchError(this._handleError));
   }
 
@@ -56,15 +60,19 @@ export class TicketService {
     details: string
   ): Observable<boolean> {
     const body = details ? { details } : {};
-    return this.http.put(`/api/tickets/${id}/${field}/${value}`, body).pipe(
-      map(() => true),
-      catchError(this._handleError)
-    );
+    return this.http
+      .put(`${this.baseHref}api/tickets/${id}/${field}/${value}`, body)
+      .pipe(
+        map(() => true),
+        catchError(this._handleError)
+      );
   }
 
   assignTicket(id: number, technicianIds: number[]): Observable<boolean> {
     return this.http
-      .put(`/api/tickets/${id}/technicians`, { technicians: technicianIds })
+      .put(`${this.baseHref}api/tickets/${id}/technicians`, {
+        technicians: technicianIds
+      })
       .pipe(
         map(() => true),
         catchError(this._handleError)
@@ -72,9 +80,11 @@ export class TicketService {
   }
 
   addUpdate(id: number, details: string): Observable<boolean> {
-    return this.http.post(`/api/tickets/${id}/updates`, { details }).pipe(
-      map(() => true),
-      catchError(this._handleError)
-    );
+    return this.http
+      .post(`${this.baseHref}api/tickets/${id}/updates`, { details })
+      .pipe(
+        map(() => true),
+        catchError(this._handleError)
+      );
   }
 }

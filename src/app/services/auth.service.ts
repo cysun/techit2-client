@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -12,7 +13,10 @@ const jwtHelper = new JwtHelperService();
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(APP_BASE_HREF) private baseHref: string,
+    private http: HttpClient
+  ) {}
 
   private currentUserSubject = new BehaviorSubject<User>(
     this._getCurrentUser()
@@ -33,7 +37,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<boolean> {
     return this.http
-      .post<LoginResponse>('/api/login', { username, password })
+      .post<LoginResponse>(`${this.baseHref}api/login`, { username, password })
       .pipe(
         map(loginResponse => {
           const currentUser = jwtHelper.decodeToken(loginResponse.token);
@@ -57,7 +61,7 @@ export class AuthService {
   }
 
   updateProfile(user: User): Observable<boolean> {
-    return this.http.patch<User>(`/api/users/${user._id}`, user).pipe(
+    return this.http.patch<User>(`${this.baseHref}api/users/${user._id}`, user).pipe(
       map(updatedUser => {
         this.currentUserSubject.next(User.fromObj(updatedUser));
         return true;
