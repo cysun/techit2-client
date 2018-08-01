@@ -23,6 +23,7 @@ export class UserFormComponent implements OnInit {
     this.user.name = '';
     this.user.roles = [];
     this.user.local = false;
+    this.user.enabled = true;
   }
 
   onSubmit() {

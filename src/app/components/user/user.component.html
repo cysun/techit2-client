@@ -31,23 +31,23 @@
           <option *ngFor="let department of departments">{{department}}</option>
         </select>
       </div>
-      <div class="form-group col-md-3 col-lg-6">
+      <div class="form-group col-md-6">
         <label>Username</label>
         <input [(ngModel)]="user.username" [disabled]="!editable" name="username" type="text"
           class="form-control" required>
       </div>
-      <div class="form-group col-md-9 col-lg-6">
-        <label>Roles and Options</label>
+      <div class="form-group col-md-6">
+        <label>Options</label>
         <div>
           <div class="form-check form-check-inline">
-            <label class="form-check-label m-2">Local</label>
             <input [(ngModel)]="user.local" [disabled]="!editable" name="local" type="checkbox"
               class="form-check-input">
+            <label class="form-check-label">Local</label>
           </div>
-          <div *ngFor="let role of roles" class="form-check form-check-inline">
-            <label class="form-check-label m-2">{{role}}</label>
-            <input [(checklist)]="user.roles" [checklistValue]="role" [disabled]="!editable"
-              type="checkbox" class="form-check-input">
+          <div class="form-check form-check-inline">
+            <input [(ngModel)]="user.enabled" [disabled]="!editable" name="enabled" type="checkbox"
+              class="form-check-input">
+            <label class="form-check-label">Enabled</label>
           </div>
         </div>
       </div>
@@ -63,6 +63,16 @@
         <label>Confirm Password</label>
         <input [(ngModel)]="user.password2" [disabled]="!editable" name="password2"
           type="password" class="form-control">
+      </div>
+      <div class="form-group col">
+        <label>Roles</label>
+        <div>
+          <div *ngFor="let role of roles" class="form-check form-check-inline">
+            <input [(checklist)]="user.roles" [checklistValue]="role" [disabled]="!editable"
+              type="checkbox" class="form-check-input">
+            <label class="form-check-label">{{role}}</label>
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-row m-3">
